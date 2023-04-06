@@ -27,15 +27,26 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             calculate()
         }
     }
+
+    private fun isValid(): Boolean {
+        return (binding.distance.text.toString() != ""
+                && binding.price.text.toString() != ""
+                && binding.autonomy.text.toString() != ""
+                && binding.autonomy.text.toString().toFloat() != 0f )
+    }
     private fun calculate(){
 
-        val distance = binding.distance.text.toString().toFloat()
-        val price = binding.price.text.toString().toFloat()
-        val autonomy = binding.autonomy.text.toString().toFloat()
+        if(isValid()){
+            val distance = binding.distance.text.toString().toFloat()
+            val price = binding.price.text.toString().toFloat()
+            val autonomy = binding.autonomy.text.toString().toFloat()
 
-        val totalValue = (distance * price) / autonomy
 
-        binding.totalValue.text = "R$ ${"%.2f".format(totalValue)}"
-        //Toast.makeText(this, totalValue.toString(), Toast.LENGTH_SHORT).show()
+            val totalValue = (distance * price) / autonomy
+            binding.totalValue.text = "R$ ${"%.2f".format(totalValue)}"
+
+        }else{
+            Toast.makeText(this, R.string.validation_fill_all_fields, Toast.LENGTH_SHORT).show()
+        }
     }
 }
